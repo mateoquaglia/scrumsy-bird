@@ -10,6 +10,7 @@ var game = {
     },
 
     // Hola mundo
+    // Segunda prueba de commit
     resources: [
             // images
         {name: "bg", type:"image", src: "data/img/bg.png"},
