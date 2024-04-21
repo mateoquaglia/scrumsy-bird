@@ -3,8 +3,9 @@ Sclumsy Bird
 
  MelonJS  "Flappy Bird"
 
-![Imgur](https://imgur.com/MdRWLFB)
 
+
+![Captura](https://github.com/mateoquaglia/scrumsy-bird/assets/117778104/d33c95d9-8cd7-483c-b069-a9a983e75870)
 
 
 
