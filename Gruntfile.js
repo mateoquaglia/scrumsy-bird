@@ -58,7 +58,15 @@ module.exports = function(grunt) {
                 'build/clumsy-min.js'
             ],
         },
-
+        watch: {
+            scripts: {
+                files: ['js/**/*.js'],
+                tasks: ['uglify'],
+                options: {
+                    spawn: false,
+                },
+            },
+        },
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
