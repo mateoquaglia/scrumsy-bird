@@ -57,6 +57,15 @@ module.exports = function(grunt) {
             dist: [
                 'build/clumsy-min.js'
             ],
+        },       
+         watch: {
+            scripts: {
+                files: ['js/**/*.js'],
+                tasks: ['uglify'],
+                options: {
+                    spawn: false,
+                },
+            },
         },
 
     });
@@ -65,6 +74,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks("grunt-contrib-connect");
+    grunt.loadNpmTasks('grunt-contrib-connect'); // Cargar el complemento grunt-contrib-connect
 
 
     // Default task.
