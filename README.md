@@ -3,7 +3,7 @@ Sclumsy Bird
 
  MelonJS  "Flappy Bird"
 
-![texto alternativo](https://imgur.com/MdRWLFB)
+![](https://imgur.com/MdRWLFB)
 
 
 
