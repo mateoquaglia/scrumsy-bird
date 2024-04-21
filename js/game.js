@@ -9,6 +9,7 @@ var game = {
         muted: false
     },
 
+    // Hola mundo
     resources: [
             // images
         {name: "bg", type:"image", src: "data/img/bg.png"},
