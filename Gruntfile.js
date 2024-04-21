@@ -73,7 +73,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks("grunt-contrib-connect");
-
+    grunt.loadNpmTasks('grunt-contrib-connect'); // Cargar el complemento grunt-contrib-connect
 
     // Default task.
     grunt.registerTask('default', ['uglify']);
