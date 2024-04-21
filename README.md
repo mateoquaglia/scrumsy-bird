@@ -1,4 +1,4 @@
-Sclumsy Bird
+Scrumsy Bird
 ===========
 
  MelonJS  "Flappy Bird"
