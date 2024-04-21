@@ -1,7 +1,7 @@
 Sclumsy Bird
 ===========
 
-A MelonJS made "Flappy Bird" clone.
+ MelonJS  "Flappy Bird"
 
 ![](https://imgur.com/a/SHOwCta)
 
