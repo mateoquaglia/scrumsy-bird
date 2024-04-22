@@ -1,7 +1,8 @@
 Scrumsy Bird
 ===========
-
- MelonJS  "Flappy Bird"
+Trabajo practico correspondiente a la materia Ing.Software FCEFyN UNC 
+Aplicacion de patrones de diseño a juego estilo "Flappy Bird" trabajado con libreria MelonJS  
+ 
 
 
 
