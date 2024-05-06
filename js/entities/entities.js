@@ -257,3 +257,5 @@ init: function(x, y) {
      
     },
     update: function(dt) {
+        this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        this.pos.x += this.body.vel.x * dt/1000;
