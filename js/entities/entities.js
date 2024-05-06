@@ -176,6 +176,7 @@ game.PipeGenerator = me.Renderable.extend({
             me.game.world.addChild(pipe1, 10);
             me.game.world.addChild(pipe2, 10);
             me.game.world.addChild(hit, 11);
+            me.game.world.addChild(nonCollidingEntity, 10);
         }
         this._super(me.Entity, "update", [dt]);
     },
