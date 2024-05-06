@@ -256,3 +256,4 @@ init: function(x, y) {
         this.body.collisionType = me.collision.types.NO_OBJECT;
      
     },
+    update: function(dt) {
