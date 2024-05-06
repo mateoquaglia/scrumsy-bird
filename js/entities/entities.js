@@ -263,3 +263,8 @@ init: function(x, y) {
          if (this.pos.x + this.width < 0) {
             me.game.world.removeChild(this);
         }
+        
+        this._super(me.Entity, 'update', [dt]);
+        return true;
+    }
+});
