@@ -23,6 +23,7 @@ var game = {
         {name: "tweet", type:"image", src: "data/img/tweet.png"},
         ////////////////////////////////////////////////////////////////////////////////////////////
         {name: "objeto", type:"image", src: "data/img/objeto.png"},
+        ////////////////////////////////////////////////////////////////////////////////////////////
         // sounds
         {name: "theme", type: "audio", src: "data/bgm/"},
         {name: "hit", type: "audio", src: "data/sfx/"},
