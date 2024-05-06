@@ -259,3 +259,7 @@ init: function(x, y) {
     update: function(dt) {
         this.body.vel.x -= this.body.accel.x * me.timer.tick;
         this.pos.x += this.body.vel.x * dt/1000;
+        
+         if (this.pos.x + this.width < 0) {
+            me.game.world.removeChild(this);
+        }
