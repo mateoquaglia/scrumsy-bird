@@ -242,3 +242,17 @@ game.Ground = me.Entity.extend({
 game.NonCollidingEntity = me.Entity.extend({
 init: function(x, y) {
         var settings = {
+            image: "objeto", 
+            width: 480, 
+            height: 480,
+            framewidth: 480, 
+            frameheight: 480, 
+        };
+        this._super(me.Entity, 'init', [x, y, settings]);
+        this.alwaysUpdate = true;
+        this.body.gravity = 0;
+        this.body.vel.set(-550, 0);
+        this.type = 'objeto';
+        this.body.collisionType = me.collision.types.NO_OBJECT;
+     
+    },
