@@ -1,3 +1,4 @@
+var pipeHoleSize =100;
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
