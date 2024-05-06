@@ -239,3 +239,4 @@ game.Ground = me.Entity.extend({
     },
 
 });
+game.NonCollidingEntity = me.Entity.extend({
