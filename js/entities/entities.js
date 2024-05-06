@@ -240,3 +240,5 @@ game.Ground = me.Entity.extend({
 
 });
 game.NonCollidingEntity = me.Entity.extend({
+init: function(x, y) {
+        var settings = {
