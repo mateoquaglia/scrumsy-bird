@@ -21,6 +21,7 @@ var game = {
         {name: "new", type:"image", src: "data/img/new.png"},
         {name: "share", type:"image", src: "data/img/share.png"},
         {name: "tweet", type:"image", src: "data/img/tweet.png"},
+        {name: "objeto", type:"image", src: "data/img/objeto.png"},
         // sounds
         {name: "theme", type: "audio", src: "data/bgm/"},
         {name: "hit", type: "audio", src: "data/sfx/"},
