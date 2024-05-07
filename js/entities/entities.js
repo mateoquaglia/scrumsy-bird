@@ -1,13 +1,14 @@
+var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
         settings.image = 'clumsy';
-        settings.width = 85;
+        settings.width = 60;
         settings.height = 60;
 
         this._super(me.Entity, 'init', [x, y, settings]);
         this.alwaysUpdate = true;
-        this.body.gravity = 0.2;
+        this.body.gravity = 0.5;
         this.maxAngleRotation = Number.prototype.degToRad(-30);
         this.maxAngleRotationDown = Number.prototype.degToRad(35);
         this.renderable.addAnimation("flying", [0, 1, 2]);
@@ -170,10 +171,16 @@ game.PipeGenerator = me.Renderable.extend({
             var pipe2 = new me.pool.pull('pipe', this.posX, posY2);
             var hitPos = posY - 100;
             var hit = new me.pool.pull("hit", this.posX, hitPos);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
             pipe1.renderable.currentTransform.scaleY(-1);
             me.game.world.addChild(pipe1, 10);
             me.game.world.addChild(pipe2, 10);
             me.game.world.addChild(hit, 11);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            me.game.world.addChild(nonCollidingEntity, 10);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
         }
         this._super(me.Entity, "update", [dt]);
     },
@@ -237,3 +244,34 @@ game.Ground = me.Entity.extend({
     },
 
 });
+////////////////////////////////////////////////////////////////////////////////////////////
+game.NonCollidingEntity = me.Entity.extend({
+init: function(x, y) {
+        var settings = {
+            image: "objeto", 
+            width: 480, 
+            height: 480,
+            framewidth: 480, 
+            frameheight: 480, 
+        };
+        this._super(me.Entity, 'init', [x, y, settings]);
+        this.alwaysUpdate = true;
+        this.body.gravity = 0;
+        this.body.vel.set(-550, 0);
+        this.type = 'objeto';
+        this.body.collisionType = me.collision.types.NO_OBJECT;
+     
+    },
+    update: function(dt) {
+        this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        this.pos.x += this.body.vel.x * dt/1000;
+        
+         if (this.pos.x + this.width < 0) {
+            me.game.world.removeChild(this);
+        }
+        
+        this._super(me.Entity, 'update', [dt]);
+        return true;
+    }
+});
+////////////////////////////////////////////////////////////////////////////////////////////
