@@ -24,7 +24,10 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
-    "node": "^18.20.1"
+    "chai": "^5.1.0",
+    "melonjs": "^17.2.0",
+    "node": "^18.20.2",
+    "wdio": "^6.0.1"
   },
  "devDependencies": {
     "@babel/core": "^7.24.5",
