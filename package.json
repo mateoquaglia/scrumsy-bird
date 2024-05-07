@@ -68,4 +68,7 @@
    "scripts": {
     "test": "jest"
   },
+  "compilerOptions": {
+    "esModuleInterop": true
+  }
 }
