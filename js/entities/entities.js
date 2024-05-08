@@ -177,7 +177,7 @@ game.PipeGenerator = me.Renderable.extend({
             var hitPos = posY - 100;
             var hit = new me.pool.pull("hit", this.posX, hitPos);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
-            //var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2);
+            var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             pipe1.renderable.currentTransform.scaleY(-1);
             me.game.world.addChild(pipe1, 10);
