@@ -250,6 +250,10 @@ game.Ground = me.Entity.extend({
 
 });
 
+<<<<<<< HEAD
+=======
+////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> bdc8c1dc476f4fe783abd957fb221ac5dd000fa1
 game.NonCollidingEntity = me.Entity.extend({
 init: function(x, y) {
         var settings = {
