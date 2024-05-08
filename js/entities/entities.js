@@ -1,4 +1,7 @@
+
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
+var game = game || {}; //////////////////////////////////////////////////////////////////////////////////////////
+
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
@@ -116,6 +119,11 @@ game.BirdEntity = me.Entity.extend({
     }
 
 });
+
+
+game.createBirdEntity = function(x, y) {
+    return new game.BirdEntity(x, y);
+};
 
 
 game.PipeEntity = me.Entity.extend({
@@ -244,6 +252,7 @@ game.Ground = me.Entity.extend({
     },
 
 });
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 game.NonCollidingEntity = me.Entity.extend({
 init: function(x, y) {
@@ -275,3 +284,8 @@ init: function(x, y) {
     }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+module.exports = {
+    game: game,
+    BirdEntity: game.BirdEntity
+};

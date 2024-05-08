@@ -63,3 +63,4 @@ var game = {
         me.state.change(me.state.MENU);
     }
 };
+module.exports = game;
