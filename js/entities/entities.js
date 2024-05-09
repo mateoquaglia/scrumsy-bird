@@ -280,7 +280,4 @@ init: function(x, y) {
     }
 });
 
-module.exports = {
-    game: game,
-    BirdEntity: game.BirdEntity
-};
+
