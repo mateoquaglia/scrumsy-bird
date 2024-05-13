@@ -21,5 +21,5 @@ describe('NonCollidingEntity tests', () => {
         expect(entity.pos.x).toBeLessThan(10);
     });
 
-    //  otros métodos y comportamientos
+    
 });
