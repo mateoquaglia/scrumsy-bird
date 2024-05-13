@@ -17,7 +17,7 @@ describe('NonCollidingEntity tests', () => {
     it('should update position correctly', () => {
         
         const entity = new NonCollidingEntity(10, 20);
-        entity.update(1000); // Simula el paso de 1 segundo
+        entity.update(1000); 
         expect(entity.pos.x).toBeLessThan(10);
     });
 
