@@ -8,7 +8,7 @@ module.exports = {
       '^.+\\.tsx?$': 'ts-jest',
       '^.+\\.(ts|tsx)$': 'ts-jest',
       '^.+\\.jsx?$': 'babel-jest',
-      '^.+\\.js$': 'jest-transform-stub',
+     
     },
    
   };
