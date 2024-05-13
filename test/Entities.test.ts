@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { collision } from '../js/melonJS-min.js';
 import { NonCollidingEntity } from '../js/entities/entities.js';
-
+//tratar de implementarlo con mocks
 describe('NonCollidingEntity tests', () => {
     it('actualizar la pos correctamente', () => {
         
