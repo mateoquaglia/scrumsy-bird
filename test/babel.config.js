@@ -3,7 +3,7 @@ module.exports = {
       '@babel/preset-env',
       '@babel/preset-react',
       '@babel/preset-flow',
-     "@babel/preset-typescript"
+     '@babel/preset-typescript'
     ],
     transform: {
         '^.+\\.jsx?$': 'babel-jest',
