@@ -1,18 +1,19 @@
 {
+    "exclude": [
+        "Gruntfile.js",
+        "build/clumsy-min.js",
+        "js/entities/jest.config.js",
+        "js/entities/HUD.js",
+        "js/entities/entities.js",
+        "js/game.js",
+        "js/melonJS-min.js",
+        "js/screens/gameover.js",
+        "js/screens/play.js",
+        "js/screens/title.js"
+    ],
     "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "outDir": "./dist",
-    "strict": true,
-    "moduleResolution": "node",
-    "noImplicitAny": false
-  },
-  "transform": {
-    "\\.js$": "<rootDir>/node_modules/babel-jest"
-  },
-  
-  "include": ["js/**/*.js","test/**/*.ts","src/**/*.ts"],
-  "exclude": ["node_modules"]
+        "esModuleInterop": true,
+        "allowJs": true,
+        "noEmit": true
+    }
 }
-

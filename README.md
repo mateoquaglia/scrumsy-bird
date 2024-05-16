@@ -1,8 +1,7 @@
 Scrumsy Bird
 ===========
-Trabajo practico correspondiente a la materia Ing.Software FCEFyN UNC 
-Aplicacion de patrones de diseño a juego estilo "Flappy Bird" trabajado con libreria MelonJS  
- 
+
+ MelonJS  "Flappy Bird"
 
 
 
@@ -33,7 +32,10 @@ grunt connect
 ```
 
 Abrir el navegador en red local `http://localhost:8001/`
-![diagrama de flujo](https://github.com/mateoquaglia/scrumsy-bird/assets/117778104/3419312f-9d27-46a8-a19c-0d91a971213f)
 
-![WhatsApp Image 2024-04-23 at 8 43 41 PM](https://github.com/mateoquaglia/scrumsy-bird/assets/117778104/961710a5-b580-4df7-939d-60a2f7259076)
+![Diagrama de Flujo](https://github.com/nicoluduena04/portfolioNico/blob/439f66cee4009fbf5af650b8f1de1ba5d9a5e0f2/DiagramaDeFlujoIngSoftware.PNG)
+![Diagrama de Secuencias](https://github.com/nicoluduena04/portfolioNico/blob/439f66cee4009fbf5af650b8f1de1ba5d9a5e0f2/IngSoftware.jpg)
+
+
+
 
