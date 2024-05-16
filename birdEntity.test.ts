@@ -28,6 +28,14 @@ jest.mock('./js/entities/entities.js', () => ({
         },
     }),
 }));
+
+jest.mock('melonjs', () => ({
+    collision: {
+      types: {
+        NO_OBJECT: 'mockedValue',
+      },
+    },
+  }));
 const { BirdEntity, createBirdEntity } = require('./js/entities/entities.js');
 
 jest.mock('me');
