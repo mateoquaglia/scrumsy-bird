@@ -51,3 +51,15 @@ test('test parametros iniciales BirdEntity', done => {
    
     done();
 });
+
+
+describe('NonCollidingEntity tests', () => {
+    it('test parametros iniciales', done => {
+        const entity = new NonCollidingEntity(10, 20);
+        expect(entity.pos.x).toBe(10);
+        expect(entity.pos.y).toBe(20);
+        expect(entity.alwaysUpdate).toBe(true);
+        expect(entity.body.gravity).toBe(0);
+        expect(entity.type).toBe('objeto');
+        done();
+    });
