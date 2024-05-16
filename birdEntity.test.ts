@@ -2,7 +2,7 @@ const jestDom = require('@testing-library/jest-dom');
 const collision = require('./js/melonJS-min.js').collision;
 const game = require('./js/game.js');
 
-// Mock the BirdEntity class in the game module
+
 // Mock  BirdEntity y NonCollidingEntity para que no se ejecute el constructor real
 jest.mock('./js/entities/entities.js', () => ({
     BirdEntity: jest.fn(),
