@@ -36,7 +36,10 @@ jest.mock('melonjs', () => ({
       },
     },
   }));
+
+
 const { BirdEntity, createBirdEntity } = require('./js/entities/entities.js');
+const { NonCollidingEntity } = require('./js/entities/entities.js');
 
 jest.mock('me');
 
