@@ -63,3 +63,10 @@ describe('NonCollidingEntity tests', () => {
         expect(entity.type).toBe('objeto');
         done();
     });
+    it('test correccion de posicion', done => {
+        const entity = new NonCollidingEntity(10, 20);
+        entity.update(1000); 
+        expect(entity.pos.x).toBeLessThan(10);
+        done();
+    });
+}); 
