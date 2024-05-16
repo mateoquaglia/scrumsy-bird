@@ -43,15 +43,11 @@ const { NonCollidingEntity } = require('./js/entities/entities.js');
 
 jest.mock('me');
 
-// Define the test
-test('should have correct initial position', done => {
-    // Create the BirdEntity
+test('test parametros iniciales BirdEntity', done => {
+    
     const bird = createBirdEntity(60, 60);
-
-    // Verify that the initial position is correct
     expect(bird.pos.x).toBe(60);
     expect(bird.pos.y).toBe(60);
-
-    // Indicate that the test has finished
+   
     done();
 });
