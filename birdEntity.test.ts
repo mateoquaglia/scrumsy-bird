@@ -6,7 +6,7 @@ const game = require('./js/game.js');
 // Mock  BirdEntity y NonCollidingEntity para que no se ejecute el constructor real
 jest.mock('./js/entities/entities.js', () => ({
     BirdEntity: jest.fn(),
-    NonCollidingEntity: jest.fn().mockImplementation(function(x, y) { 
+    NonCollidingEntity: jest.fn().mockImplementation(function(x, y) {  
         this.pos = {
             x: x,
             y: y,
@@ -21,14 +21,14 @@ jest.mock('./js/entities/entities.js', () => ({
             this.pos.x -= 1;
         };
     }),
-    createBirdEntity: jest.fn().mockReturnValue({
+    createBirdEntity: jest.fn().mockReturnValue({ 
         pos: {
             x: 60,
             y: 60,
         },
     }),
 }));
-jest.mock('melonjs', () => ({
+jest.mock('melonjs', () => ({ 
     collision: {
       types: {
         NO_OBJECT: 'mockedValue',
@@ -36,14 +36,12 @@ jest.mock('melonjs', () => ({
     },
   }));
 
-
-
   
 
 const { BirdEntity, createBirdEntity } = require('./js/entities/entities.js');
 const { NonCollidingEntity } = require('./js/entities/entities.js');
 
-jest.mock('me');
+
 
 test('test parametros iniciales BirdEntity', done => {
     

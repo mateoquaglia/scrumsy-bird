@@ -1,4 +1,9 @@
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
+game.pipeVelocity = -5; 
+if (typeof game.pipeEntities === 'undefined') {
+    game.pipeEntities = [];
+}
+////////////////////////////////////////////////////////////////////////////////////////////
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
@@ -93,7 +98,13 @@ game.BirdEntity = me.Entity.extend({
             me.game.world.removeChildNow(obj);
             game.data.steps++;
             me.audio.play('hit');
+        }/////////////////////////////////////////////////////////////////////////////////////
+        if (obj.type === 'objeto') {
+            var strategy = new DecreaseSpeedStrategy();
+            strategy.changeSpeed(game.pipeEntities);
+            
         }
+        ////////////////////////////////////////////////////////////////////////////////
     },
 
     endAnimation: function() {
@@ -135,10 +146,20 @@ game.PipeEntity = me.Entity.extend({
         this._super(me.Entity, 'init', [x, y, settings]);
         this.alwaysUpdate = true;
         this.body.gravity = 0;
-        this.body.vel.set(-5, 0);
+        this.body.vel.set(game.pipeVelocity, 0);
         this.type = 'pipe';
+////////////////////////////////////////////////////////
+        game.pipeEntities.push(this);
+////////////////////////////////////////////////////////
     },
-
+////////////////////////////////////////////////////////
+    onDestroyEvent: function() {
+        var index = game.pipeEntities.indexOf(this);
+        if (index !== -1) {
+            game.pipeEntities.splice(index, 1);
+        }
+    },
+    ////////////////////////////////////////////////////////
     update: function(dt) {
         // mechanics
         if (!game.data.start) {
@@ -160,7 +181,7 @@ game.PipeGenerator = me.Renderable.extend({
         this._super(me.Renderable, 'init', [0, me.game.viewport.width, me.game.viewport.height, 92]);
         this.alwaysUpdate = true;
         this.generate = 0;
-        this.pipeFrequency = 92;
+        this.pipeFrequency = 100;
         this.pipeHoleSize = 1240;
         this.posX = me.game.viewport.width;
     },
@@ -251,7 +272,7 @@ game.Ground = me.Entity.extend({
 });
 
 game.NonCollidingEntity = me.Entity.extend({
-init: function(x, y) {
+    init: function(x, y) {
         var settings = {
             image: "objeto", 
             width: 480, 
@@ -264,20 +285,38 @@ init: function(x, y) {
         this.body.gravity = 0;
         this.body.vel.set(-550, 0);
         this.type = 'objeto';
-        this.body.collisionType = me.collision.types.NO_OBJECT;
-     
+        this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
     },
     update: function(dt) {
         this.body.vel.x -= this.body.accel.x * me.timer.tick;
         this.pos.x += this.body.vel.x * dt/1000;
         
-         if (this.pos.x + this.width < 0) {
+        if (this.pos.x + this.width < 0) {
             me.game.world.removeChild(this);
         }
         
         this._super(me.Entity, 'update', [dt]);
         return true;
+    },
+    onCollision: function(response, other) {
+        me.game.world.removeChild(this);
     }
 });
 
+// Define la interfaz para las estrategias
+var SpeedChangeStrategy = function() {
+    this.changeSpeed = function(pipeEntities) {
+        throw new Error("Method 'changeSpeed' must be implemented.");
+    }
+}
+// Define una estrategia que disminuye la velocidad
+var DecreaseSpeedStrategy = function() {
+    SpeedChangeStrategy.call(this);
 
+    this.changeSpeed = function(pipeEntities) {
+        game.pipeVelocity += 0.4;
+        for (var i = 0; i < pipeEntities.length; i++) {
+            pipeEntities[i].body.vel.x = game.pipeVelocity;
+        }
+    }
+}
