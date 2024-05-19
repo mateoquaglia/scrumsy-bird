@@ -1,5 +1,4 @@
-//probando branch dev
-//viendo branch dev
+
 var game = {
     data: {
         score : 0,
