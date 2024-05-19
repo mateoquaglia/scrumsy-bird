@@ -9,8 +9,7 @@ var game = {
         muted: false
     },
 
-    // Hola mundo
-    // Segunda prueba de commit
+  
     resources: [
             // images
         {name: "bg", type:"image", src: "data/img/bg.png"},
