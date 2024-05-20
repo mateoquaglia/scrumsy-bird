@@ -1,7 +1,7 @@
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
 game.pipeVelocity = -5; 
 if (typeof game.pipeEntities === 'undefined') {  //lo hago porque cuando inicia strategy espera modificar pipeEntities antes de que pipeEntities se defina
-    game.pipeEntities = [];
+    game.pipeEntities = [];                    //esta manera no se sobreescriba la variable y no se duplique pipeEntities
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 game.BirdEntity = me.Entity.extend({
