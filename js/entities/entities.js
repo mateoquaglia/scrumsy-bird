@@ -1,6 +1,6 @@
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
 game.pipeVelocity = -5; 
-if (typeof game.pipeEntities === 'undefined') {
+if (typeof game.pipeEntities === 'undefined') {  //lo hago porque cuando inicia strategy espera modificar pipeEntities antes de que pipeEntities se defina
     game.pipeEntities = [];
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
