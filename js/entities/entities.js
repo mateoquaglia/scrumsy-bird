@@ -1,7 +1,7 @@
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
 game.pipeVelocity = -5; 
-if (typeof game.pipeEntities === 'undefined') {
-    game.pipeEntities = [];
+if (typeof game.pipeEntities === 'undefined') {  //lo hago porque cuando inicia strategy espera modificar pipeEntities antes de que pipeEntities se defina 
+    game.pipeEntities = [];                      //esta manera no se sobreescriba la variable y no se duplique pipeEntities
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 game.BirdEntity = me.Entity.extend({
@@ -101,7 +101,7 @@ game.BirdEntity = me.Entity.extend({
         }/////////////////////////////////////////////////////////////////////////////////////
         if (obj.type === 'objeto') {
             var strategy = new DecreaseSpeedStrategy();
-            strategy.changeSpeed(game.pipeEntities);
+            strategy.changeSpeed(game.pipeEntities); 
             
         }
         ////////////////////////////////////////////////////////////////////////////////
@@ -304,19 +304,21 @@ game.NonCollidingEntity = me.Entity.extend({
 });
 
 // Define la interfaz para las estrategias
-var SpeedChangeStrategy = function() {
+var SpeedChangeStrategy = function() {   // Crea una superclase para las estrategias
     this.changeSpeed = function(pipeEntities) {
-        throw new Error("Method 'changeSpeed' must be implemented.");
+        throw new Error("Method 'changeSpeed' must be implemented."); // Crea una excepción si el método no ha sido implementado
     }
 }
+
+
 // Define una estrategia que disminuye la velocidad
-var DecreaseSpeedStrategy = function() {
-    SpeedChangeStrategy.call(this);
+var DecreaseSpeedStrategy = function() { // Crea una subclase de SpeedChangeStrategy
+    SpeedChangeStrategy.call(this); // Llama al constructor de la superclase
 
     this.changeSpeed = function(pipeEntities) {
         game.pipeVelocity += 0.4;
-        for (var i = 0; i < pipeEntities.length; i++) {
-            pipeEntities[i].body.vel.x = game.pipeVelocity;
+        for (var i = 0; i < pipeEntities.length; i++) {         
+            pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
         }
     }
 }
