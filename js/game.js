@@ -1,5 +1,4 @@
-//probando branch dev
-//viendo branch dev
+
 var game = {
     data: {
         score : 0,
@@ -9,8 +8,7 @@ var game = {
         muted: false
     },
 
-    // Hola mundo
-    // Segunda prueba de commit
+  
     resources: [
             // images
         {name: "bg", type:"image", src: "data/img/bg.png"},

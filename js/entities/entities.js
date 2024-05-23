@@ -1,9 +1,14 @@
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
 game.pipeVelocity = -5; 
+<<<<<<< HEAD
 if (typeof game.pipeEntities === 'undefined') {  //lo hago porque cuando inicia strategy espera modificar pipeEntities antes de que pipeEntities se defina 
     game.pipeEntities = [];                      //esta manera no se sobreescriba la variable y no se duplique pipeEntities
+=======
+if (typeof game.pipeEntities === 'undefined') {  //lo hago porque cuando inicia strategy espera modificar pipeEntities antes de que pipeEntities se defina
+    game.pipeEntities = [];                    //esta manera no se sobreescriba la variable y no se duplique pipeEntities
+>>>>>>> 6eb4fc45e3afddc0f3a3b55e124384816d4fd762
 }
-////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 game.BirdEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {};
@@ -270,7 +275,7 @@ game.Ground = me.Entity.extend({
     },
 
 });
-
+///////////////////////////////////////////////////////////////////////////////////
 game.NonCollidingEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {
