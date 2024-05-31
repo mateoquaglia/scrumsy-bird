@@ -14,9 +14,34 @@ game.HUD.Container = me.Container.extend({
 
         // give a name
         this.name = "HUD";
+        this.lifeImage = me.loader.getImage("image");
 
         // add our child score object at the top left corner
         this.addChild(new game.HUD.ScoreItem(5, 5));
+
+        this.addChild(new game.HUD.LifeItem(1,1));
+    }
+});
+
+game.HUD.LifeItem = me.Renderable.extend({
+    init: function(x, y) {
+        this._super(me.Renderable, "init", [x, y, 10, 10]);
+
+        // load the heart image
+        this.lifeImage = me.loader.getImage("image");
+
+        // make sure we use screen coordinates
+        this.floating = true;
+    },
+
+    draw: function (renderer) {
+        if (game.data.start && me.state.isCurrent(me.state.PLAY)) {
+            for (let i = 0; i < game.data.lives; i++) {
+                renderer.drawImage(this.lifeImage, i * this.lifeImage.width, 0);
+               
+            }
+        }
+    
     }
 });
 
