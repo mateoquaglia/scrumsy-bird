@@ -1,13 +1,16 @@
+
 var pipeHoleSize =100; ////////////////////////////////////////////////////////////////////////////////////////////
 game.pipeVelocity = -5; 
 if (typeof game.pipeEntities === 'undefined') {  //lo hago porque cuando inicia strategy espera modificar pipeEntities antes de que pipeEntities se defina 
     game.pipeEntities = [];                      //esta manera no se sobreescriba la variable y no se duplique pipeEntities
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-game.BirdEntity = me.Entity.extend({
+
+game.BirdEntity = me.Entity.extend({                            
     init: function(x, y) {
         var settings = {};
         settings.image = 'clumsy';
+       
         settings.width = 85;
         settings.height = 60;
 
@@ -90,8 +93,9 @@ game.BirdEntity = me.Entity.extend({
     onCollision: function(response) {
         var obj = response.b;
         if (obj.type === 'pipe' || obj.type === 'ground') {
-            me.device.vibrate(500);
+            me.device.vibrate(500); 
             this.collided = true;
+            
         }
         // remove the hit box
         if (obj.type === 'hit') {
@@ -99,10 +103,19 @@ game.BirdEntity = me.Entity.extend({
             game.data.steps++;
             me.audio.play('hit');
         }/////////////////////////////////////////////////////////////////////////////////////
-        if (obj.type === 'objeto') {
+        if (obj.type === 'mariposaRoja') {
             var strategy = new DecreaseSpeedStrategy();
             strategy.changeSpeed(game.pipeEntities); 
-            
+            this.renderable.image = me.loader.getImage('clumsyRojo'); //  nombre de su nueva imagen
+
+        
+        }
+        if (obj.type === 'mariposaAzul') {
+            var strategy = new IncreaseSpeedStrategy();
+            strategy.changeSpeed(game.pipeEntities); 
+            this.renderable.image = me.loader.getImage('clumsyAzul'); //  nombre de su nueva imagen
+
+        
         }
         ////////////////////////////////////////////////////////////////////////////////
     },
@@ -199,6 +212,7 @@ game.PipeGenerator = me.Renderable.extend({
             var hit = new me.pool.pull("hit", this.posX, hitPos);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2);
+            var nonCollidingEntity1 = new game.NonCollidingEntity1(this.posX, posY + pipeHoleSize / 6);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             pipe1.renderable.currentTransform.scaleY(-1);
             me.game.world.addChild(pipe1, 10);
@@ -206,6 +220,7 @@ game.PipeGenerator = me.Renderable.extend({
             me.game.world.addChild(hit, 11);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             me.game.world.addChild(nonCollidingEntity, 10);
+            me.game.world.addChild(nonCollidingEntity1, 10);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }
         this._super(me.Entity, "update", [dt]);
@@ -274,7 +289,7 @@ game.Ground = me.Entity.extend({
 game.NonCollidingEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {
-            image: "objeto", 
+            image: "mariposaAzul", 
             width: 480, 
             height: 480,
             framewidth: 480, 
@@ -283,8 +298,8 @@ game.NonCollidingEntity = me.Entity.extend({
         this._super(me.Entity, 'init', [x, y, settings]);
         this.alwaysUpdate = true;
         this.body.gravity = 0;
-        this.body.vel.set(-550, 0);
-        this.type = 'objeto';
+        this.body.vel.set(-850, 0);
+        this.type = 'mariposaAzul';
         this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
     },
     update: function(dt) {
@@ -303,20 +318,63 @@ game.NonCollidingEntity = me.Entity.extend({
     }
 });
 
-// Define la interfaz para las estrategias
-var SpeedChangeStrategy = function() {   // Crea una superclase para las estrategias
+
+game.NonCollidingEntity1 = me.Entity.extend({
+    init: function(x, y) {
+        var settings = {
+            image: "mariposaRoja", 
+            width: 480, 
+            height: 480,
+            framewidth: 480, 
+            frameheight: 480, 
+        };
+        this._super(me.Entity, 'init', [x, y, settings]);
+        this.alwaysUpdate = true;
+        this.body.gravity = 0;
+        this.body.vel.set(-550, 0);
+        this.type = 'mariposaRoja';
+        this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
+    },
+    update: function(dt) {
+        this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        this.pos.x += this.body.vel.x * dt/1000;
+        
+        if (this.pos.x + this.width < 0) {
+            me.game.world.removeChild(this);
+        }
+        
+        this._super(me.Entity, 'update', [dt]);
+        return true;
+    },
+    onCollision: function(response, other) {
+        me.game.world.removeChild(this);
+    }
+});
+
+var SpeedChangeStrategy = function() {   
     this.changeSpeed = function(pipeEntities) {
-        throw new Error("Method 'changeSpeed' must be implemented."); // Crea una excepción si el método no ha sido implementado
+        throw new Error("Method 'changeSpeed' must be implemented."); 
     }
 }
 
 
-// Define una estrategia que disminuye la velocidad
+
 var DecreaseSpeedStrategy = function() { // Crea una subclase de SpeedChangeStrategy
     SpeedChangeStrategy.call(this); // Llama al constructor de la superclase
 
     this.changeSpeed = function(pipeEntities) {
         game.pipeVelocity += 0.4;
+        for (var i = 0; i < pipeEntities.length; i++) {         
+            pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
+        }
+    }
+}
+
+var IncreaseSpeedStrategy = function() { // Crea una subclase de SpeedChangeStrategy
+    SpeedChangeStrategy.call(this); // Llama al constructor de la superclase
+
+    this.changeSpeed = function(pipeEntities) {
+        game.pipeVelocity -= 0.4;
         for (var i = 0; i < pipeEntities.length; i++) {         
             pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
         }

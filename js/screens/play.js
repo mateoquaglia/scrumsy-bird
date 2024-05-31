@@ -1,3 +1,4 @@
+
 game.PlayScreen = me.ScreenObject.extend({
     init: function() {
         me.audio.play("theme", true);

@@ -1,11 +1,13 @@
 
+
 var game = {
     data: {
         score : 0,
         steps: 0,
         start: false,
         newHiScore: false,
-        muted: false
+        muted: false,
+        lives: 3
     },
 
   
@@ -23,7 +25,11 @@ var game = {
         {name: "new", type:"image", src: "data/img/new.png"},
         {name: "share", type:"image", src: "data/img/share.png"},
         {name: "tweet", type:"image", src: "data/img/tweet.png"},
-        {name: "objeto", type:"image", src: "data/img/objeto.png"},
+        {name: "image", type:"image", src: "data/img/image.png"},
+        {name: "clumsyRojo", type:"image", src: "data/img/clumsyRojo.png"},
+        {name: "clumsyAzul", type:"image", src: "data/img/clumsyAzul.png"},
+        {name: "mariposaRoja", type:"image", src: "data/img/mariposaRoja.png"},
+        {name: "mariposaAzul", type:"image", src: "data/img/mariposaAzul.png"},
         // sounds
         {name: "theme", type: "audio", src: "data/bgm/"},
         {name: "hit", type: "audio", src: "data/sfx/"},
