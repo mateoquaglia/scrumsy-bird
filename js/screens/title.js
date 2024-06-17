@@ -48,7 +48,7 @@ game.TitleScreen = me.ScreenObject.extend({
                 // renderable
                 this._super(me.Renderable, 'init', [0, 0, 100, 100]);
                 this.text = me.device.touch ? 'Tap to start' : 'PRESS SPACE OR CLICK LEFT MOUSE BUTTON TO START \n\t\t\t\t\t\t\t\t\t\t\tPRESS "M" TO MUTE SOUND';
-                this.font = new me.Font('gamefont', 20, '#000');
+                this.font = new me.Font('gamefont', 20, 'blue');
             },
             draw: function (renderer) {
                 var measure = this.font.measureText(renderer, this.text);

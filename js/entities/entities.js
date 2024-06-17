@@ -13,7 +13,7 @@ game.BirdEntity = me.Entity.extend({
        
         settings.width = 85;
         settings.height = 60;
-
+        this.addObserver(pipeSpeedObserver);
         this._super(me.Entity, 'init', [x, y, settings]);
         this.alwaysUpdate = true;
         this.body.gravity = 0.2;
@@ -106,15 +106,15 @@ game.BirdEntity = me.Entity.extend({
         if (obj.type === 'mariposaRoja') {
             var strategy = new DecreaseSpeedStrategy();
             strategy.changeSpeed(game.pipeEntities); 
-            this.renderable.image = me.loader.getImage('clumsyRojo'); //  nombre de su nueva imagen
-
+            this.renderable.image = me.loader.getImage('clumsyRojo'); 
+            this.notifyObservers(game.pipeEntities);
         
         }
         if (obj.type === 'mariposaAzul') {
             var strategy = new IncreaseSpeedStrategy();
             strategy.changeSpeed(game.pipeEntities); 
-            this.renderable.image = me.loader.getImage('clumsyAzul'); //  nombre de su nueva imagen
-
+            this.renderable.image = me.loader.getImage('clumsyAzul'); 
+            this.notifyObservers(game.pipeEntities);
         
         }
         ////////////////////////////////////////////////////////////////////////////////
@@ -149,6 +149,7 @@ game.createBirdEntity = function(x, y) {
 
 game.PipeEntity = me.Entity.extend({
     init: function(x, y) {
+        
         var settings = {};
         settings.image = this.image = me.loader.getImage('pipe');
         settings.width = 148;
@@ -195,7 +196,7 @@ game.PipeGenerator = me.Renderable.extend({
         this.alwaysUpdate = true;
         this.generate = 0;
         this.pipeFrequency = 100;
-        this.pipeHoleSize = 1240;
+        this.pipeHoleSize = 1260;
         this.posX = me.game.viewport.width;
     },
 
@@ -211,8 +212,8 @@ game.PipeGenerator = me.Renderable.extend({
             var hitPos = posY - 100;
             var hit = new me.pool.pull("hit", this.posX, hitPos);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
-            var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2);
-            var nonCollidingEntity1 = new game.NonCollidingEntity1(this.posX, posY + pipeHoleSize / 6);
+            var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2); // ,
+            var nonCollidingEntity1 = new game.NonCollidingEntity1(this.posX, posY + pipeHoleSize  ); // ,
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             pipe1.renderable.currentTransform.scaleY(-1);
             me.game.world.addChild(pipe1, 10);
@@ -285,7 +286,7 @@ game.Ground = me.Entity.extend({
     },
 
 });
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 game.NonCollidingEntity = me.Entity.extend({
     init: function(x, y) {
         var settings = {
@@ -353,7 +354,7 @@ game.NonCollidingEntity1 = me.Entity.extend({
 
 var SpeedChangeStrategy = function() {   
     this.changeSpeed = function(pipeEntities) {
-        throw new Error("Method 'changeSpeed' must be implemented."); 
+        throw new Error("el metodo 'changeSpeed' no esta implementado"); 
     }
 }
 
@@ -363,7 +364,7 @@ var DecreaseSpeedStrategy = function() { // Crea una subclase de SpeedChangeStra
     SpeedChangeStrategy.call(this); // Llama al constructor de la superclase
 
     this.changeSpeed = function(pipeEntities) {
-        game.pipeVelocity += 0.4;
+        game.pipeVelocity += 3;
         for (var i = 0; i < pipeEntities.length; i++) {         
             pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
         }
@@ -374,9 +375,98 @@ var IncreaseSpeedStrategy = function() { // Crea una subclase de SpeedChangeStra
     SpeedChangeStrategy.call(this); // Llama al constructor de la superclase
 
     this.changeSpeed = function(pipeEntities) {
-        game.pipeVelocity -= 0.4;
+        game.pipeVelocity -= 1;
         for (var i = 0; i < pipeEntities.length; i++) {         
             pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
         }
     }
 }
+IncreaseSpeedStrategy.prototype = Object.create(SpeedChangeStrategy.prototype);
+IncreaseSpeedStrategy.prototype.constructor = IncreaseSpeedStrategy;
+
+
+// Observer class
+
+var Observer = function() {
+    this.update = function() {
+        throw new Error("Method 'update' must be implemented.");
+    }
+}
+
+// Make BirdEntity observable
+game.BirdEntity.prototype.observers = [];
+
+game.BirdEntity.prototype.addObserver = function(observer) {
+    this.observers.push(observer);
+}
+
+game.BirdEntity.prototype.removeObserver = function(observer) {
+    var index = this.observers.indexOf(observer);
+    if (index > -1) {
+        this.observers.splice(index, 1);
+    }
+}
+
+game.BirdEntity.prototype.notifyObservers = function() {
+    for (var i = 0; i < this.observers.length; i++) {
+        this.observers[i].update();
+    }
+}
+
+// Actualizo el método onCollision de BirdEntity
+game.BirdEntity.prototype.onCollision = function(response) {
+    var obj = response.b;
+    if (obj.type === 'pipe' || obj.type === 'ground') {
+        me.device.vibrate(500); 
+        this.collided = true;
+    }
+    if (obj.type === 'hit') {
+        me.game.world.removeChildNow(obj);
+        game.data.steps++;
+        me.audio.play('hit');
+    }
+    if (obj.type === 'mariposaAzul') {
+        // Cambia la estrategia a aumentar velocidad
+        pipeSpeedObserver.setStrategy(new IncreaseSpeedStrategy()); 
+        this.notifyObservers(game.pipeEntities);
+    }
+    if (obj.type === 'mariposaRoja') {
+        // Cambia la estrategia a disminuir velocidad
+        pipeSpeedObserver.setStrategy(new DecreaseSpeedStrategy());
+        this.notifyObservers(game.pipeEntities);
+    }
+}
+game.BirdEntity.prototype.notifyObservers = function(pipeEntities) {
+    for (var i = 0; i < this.observers.length; i++) {
+        this.observers[i].update(pipeEntities);
+    }
+   
+   if(observer.strategy) {
+    observer.strategy.changeSpeed(game.pipeEntities);
+   }
+    
+}
+// Creo un observer que cambie la velocidad del pipe.
+var PipeSpeedObserver = function() {
+    this.strategy = null;
+
+    this.setStrategy = function(strategy) {
+        this.strategy = strategy;
+    }
+ this.update = function(pipeEntities) {
+        if (this.strategy === null) {
+            throw new Error("Estrategia no establecida");
+        }
+        this.strategy.changeSpeed(pipeEntities);
+        console.log('Cambiando la velocidad de pipe entities'); // Agrega este mensaje
+    }
+   
+}
+var observer = new PipeSpeedObserver();
+var pipeSpeedObserver = new PipeSpeedObserver();
+pipeSpeedObserver.setStrategy(new DecreaseSpeedStrategy()); 
+pipeSpeedObserver.setStrategy(new IncreaseSpeedStrategy()); 
+game.BirdEntity.prototype.addObserver(pipeSpeedObserver);
+
+
+
