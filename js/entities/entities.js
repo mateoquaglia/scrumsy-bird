@@ -117,6 +117,14 @@ game.BirdEntity = me.Entity.extend({
             this.notifyObservers(game.pipeEntities);
         
         }
+        if (obj.type === 'mariposaBlanca') {
+            var strategy = new ResetSpeedStrategy();
+            strategy.changeSpeed(game.pipeEntities); 
+            this.renderable.image = me.loader.getImage('clumsy'); 
+            this.notifyObservers(game.pipeEntities);
+         
+        
+        }
         ////////////////////////////////////////////////////////////////////////////////
     },
 
@@ -213,7 +221,8 @@ game.PipeGenerator = me.Renderable.extend({
             var hit = new me.pool.pull("hit", this.posX, hitPos);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             var nonCollidingEntity = new game.NonCollidingEntity(this.posX, posY + pipeHoleSize / 2); // ,
-            var nonCollidingEntity1 = new game.NonCollidingEntity1(this.posX, posY + pipeHoleSize  ); // ,
+            var nonCollidingEntity1 = new game.NonCollidingEntity1(this.posX, posY - pipeHoleSize*1.4  ); 
+            var nonCollidingEntityReset = new game.NonCollidingEntityReset(this.posX, posY - pipeHoleSize  );// ,
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             pipe1.renderable.currentTransform.scaleY(-1);
             me.game.world.addChild(pipe1, 10);
@@ -222,6 +231,7 @@ game.PipeGenerator = me.Renderable.extend({
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             me.game.world.addChild(nonCollidingEntity, 10);
             me.game.world.addChild(nonCollidingEntity1, 10);
+            me.game.world.addChild(nonCollidingEntityReset, 10);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }
         this._super(me.Entity, "update", [dt]);
@@ -350,6 +360,39 @@ game.NonCollidingEntity1 = me.Entity.extend({
     onCollision: function(response, other) {
         me.game.world.removeChild(this);
     }
+    
+});
+game.NonCollidingEntityReset = me.Entity.extend({
+    init: function(x, y) {
+        var settings = {
+            image: "mariposaBlanca", 
+            width: 480, 
+            height: 480,
+            framewidth: 480, 
+            frameheight: 480, 
+        };
+        this._super(me.Entity, 'init', [x, y, settings]);
+        this.alwaysUpdate = true;
+        this.body.gravity = 0;
+        this.body.vel.set(-350, 0);
+        this.type = 'mariposaBlanca';
+        this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;
+    },
+    update: function(dt) {
+        this.body.vel.x -= this.body.accel.x * me.timer.tick;
+        this.pos.x += this.body.vel.x * dt/1000;
+        
+        if (this.pos.x + this.width < 0) {
+            me.game.world.removeChild(this);
+        }
+        
+        this._super(me.Entity, 'update', [dt]);
+        return true;
+    },
+    onCollision: function(response, other) {
+        me.game.world.removeChild(this);
+    }
+    
 });
 
 var SpeedChangeStrategy = function() {   
@@ -376,6 +419,16 @@ var IncreaseSpeedStrategy = function() { // Crea una subclase de SpeedChangeStra
 
     this.changeSpeed = function(pipeEntities) {
         game.pipeVelocity -= 1;
+        for (var i = 0; i < pipeEntities.length; i++) {         
+            pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
+        }
+    }
+}
+var ResetSpeedStrategy = function() { // Crea una subclase de SpeedChangeStrategy
+    SpeedChangeStrategy.call(this); // Llama al constructor de la superclase
+
+    this.changeSpeed = function(pipeEntities) {
+        game.pipeVelocity = -5;
         for (var i = 0; i < pipeEntities.length; i++) {         
             pipeEntities[i].body.vel.x = game.pipeVelocity; // Cambia la velocidad de cada tubería
         }
@@ -435,6 +488,11 @@ game.BirdEntity.prototype.onCollision = function(response) {
         pipeSpeedObserver.setStrategy(new DecreaseSpeedStrategy());
         this.notifyObservers(game.pipeEntities);
     }
+    if (obj.type === 'mariposaBlanca') {
+        // Cambia la estrategia a disminuir velocidad
+        pipeSpeedObserver.setStrategy(new ResetSpeedStrategy());
+        this.notifyObservers(game.pipeEntities);
+    }
 }
 game.BirdEntity.prototype.notifyObservers = function(pipeEntities) {
     for (var i = 0; i < this.observers.length; i++) {
@@ -461,7 +519,7 @@ var PipeSpeedObserver = function() {
         console.log('Cambiando la velocidad de pipe entities'); // Agrega este mensaje
     }
    
-}
+}       
 var observer = new PipeSpeedObserver();
 var pipeSpeedObserver = new PipeSpeedObserver();
 pipeSpeedObserver.setStrategy(new DecreaseSpeedStrategy()); 

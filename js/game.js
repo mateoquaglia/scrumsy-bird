@@ -30,6 +30,7 @@ var game = {
         {name: "clumsyAzul", type:"image", src: "data/img/clumsyAzul.png"},
         {name: "mariposaRoja", type:"image", src: "data/img/mariposaRoja.png"},
         {name: "mariposaAzul", type:"image", src: "data/img/mariposaAzul.png"},
+        {name: "mariposaBlanca", type:"image", src: "data/img/mariposaBlanca.png"},
         // sounds
         {name: "theme", type: "audio", src: "data/bgm/"},
         {name: "hit", type: "audio", src: "data/sfx/"},
