@@ -1,4 +1,4 @@
-game.HUD = game.HUD || {};
+game.HUD = game.HUD || {}; 
 
 game.HUD.Container = me.Container.extend({
     init: function() {
