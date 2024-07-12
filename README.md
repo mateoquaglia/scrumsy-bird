@@ -4,7 +4,7 @@ Scrumsy Bird
  MelonJS  "Flappy Bird"
 
 
-
+![multisim](https://github.com/user-attachments/assets/b272e626-17c8-4114-96ff-295f04c2b2ae)
 ![Captura](https://github.com/mateoquaglia/scrumsy-bird/assets/117778104/d33c95d9-8cd7-483c-b069-a9a983e75870)
 
 
