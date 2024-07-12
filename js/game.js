@@ -1,7 +1,7 @@
 
 
 var game = {
-    data: {
+    data: { 
         score : 0,
         steps: 0,
         start: false,
