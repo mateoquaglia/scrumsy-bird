@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         'js/entities/entities.js',
         'js/entities/HUD.js',
         'js/screens/title.js',
-        'js/screens/play.js',
+        'js/screens/play.js', 
         'js/screens/gameover.js',
     ];
 
