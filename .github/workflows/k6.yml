@@ -22,7 +22,7 @@ jobs:
       - name: Run K6 tests
         uses: grafana/run-k6-action@v1
         with:
-          path: .github/workflows/k6.yml
+          path: ./tests/*.js
           cloud-comment-on-pr: true
         env:
           K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
