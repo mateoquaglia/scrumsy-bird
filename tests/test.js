@@ -6,9 +6,9 @@ const errorRate = new Rate('errors');
 
 export let options = {
     stages: [
-        { duration: '30s', target: 20 },
-        { duration: '1m', target: 20 },
-        { duration: '30s', target: 0 },
+        { duration: '10s', target: 10 },
+        { duration: '20s', target: 20 },
+        { duration: '10s', target: 0 },
     ],
     thresholds: {
         http_req_duration: ['p(95)<500'],
@@ -18,7 +18,7 @@ export let options = {
 
 export default function () {
     group('Home Page', function () {
-        let res = http.get('https://jsonplaceholder.typicode.com/posts/1');  // URL de ejemplo real
+        let res = http.get('https://jsonplaceholder.typicode.com/posts/1');
         check(res, {
             'status is 200': (r) => r.status === 200,
             'response time is below 200ms': (r) => r.timings.duration < 200,
@@ -27,7 +27,7 @@ export default function () {
     });
 
     group('Login Page', function () {
-        let res = http.get('https://jsonplaceholder.typicode.com/users');  // URL de ejemplo real
+        let res = http.get('https://jsonplaceholder.typicode.com/users');
         check(res, {
             'status is 200': (r) => r.status === 200,
             'response time is below 200ms': (r) => r.timings.duration < 200,
@@ -40,7 +40,7 @@ export default function () {
             title: 'foo',
             body: 'bar',
             userId: 1,
-        });  // URL de ejemplo real
+        });
         check(res, {
             'status is 201': (r) => r.status === 201,
             'response time is below 300ms': (r) => r.timings.duration < 300,
