@@ -25,7 +25,7 @@ jobs:
 
       - name: Set horusec path
         run: |
-          export PATH=$PATH:/home/runner/.horusec" >> $GITHUB_ENV
+          export PATH=$HOME/.horusec/bin:$PATH
           echo "Horusec path set successfully"
     
       - name: Verify Horusec Installation
