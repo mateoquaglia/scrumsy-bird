@@ -1,0 +1,6 @@
+projectKey=scrumsy
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=scrumsy
+ceTaskId=7c70e0e3-c669-4068-9476-694d345d2c90
+ceTaskUrl=http://localhost:9000/api/ce/task?id=7c70e0e3-c669-4068-9476-694d345d2c90
