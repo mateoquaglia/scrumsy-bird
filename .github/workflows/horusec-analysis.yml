@@ -6,6 +6,8 @@ on:
       - main
       - featHorusec
   pull_request:
+    branches:
+      - main
 
 jobs:
   horusec-analysis:
@@ -13,19 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        - name: Install Horusec Manually
-          run: |
-            mkdir -p $HOME/.horusec/bin
-            curl -fsSL https://github.com/ZupIT/horusec/releases/latest/download/horusec-linux-amd64 -o $HOME/.horusec/bin/horusec
-            chmod +x $HOME/.horusec/bin/horusec
-            export PATH=$HOME/.horusec/bin:$PATH
-      
-        - name: Verify Horusec Installation
-          run: horusec version
-        
-          
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      # 3. Ejecutar análisis con Horusec
-        - name: Run Horusec
-          run: |
-           horusec start -p
+      - name: Run Horusec with Docker
+        run: |
+          docker run --rm -v $(pwd):/src horuszup/horusec-cli:latest horusec start -p /src --log-level=info --enable-owasp-dependency-check
