@@ -23,9 +23,15 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/scripts/install.sh | bash
           echo "Horusec CLI installed successfully"
 
-      - name: Set Horusec to PATH
+      - name: Set horusec path
         run: |
-          export PATH=$PATH:/usr/local/bin
+          echo "export PATH=$PATH:/home/runner/.horusec" >> $GITHUB_ENV
+          echo "Horusec path set successfully"
+    
+      - name: Verify Horusec Installation
+        run: horusec version
+        
+          
 
       # 3. Ejecutar análisis con Horusec
       - name: Run Horusec
