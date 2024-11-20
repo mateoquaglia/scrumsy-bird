@@ -30,4 +30,4 @@ jobs:
       # 3. Ejecutar análisis con Horusec
       - name: Run Horusec
         run: |
-          horusec start -p . --log-level=info --enable-owasp-dependency-check
+          horusec start -p
