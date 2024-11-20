@@ -17,14 +17,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Go
+    - name: Install Go
       uses: actions/setup-go@v2
       with:
         go-version: '1.16'
 
     - name: Install Horusec
       run: |
-        curl -fsSL https://horusec.io/bin/install.sh | bash
+        go install github.com/ZupIT/horusec/cmd/horusec@latest
+        export PATH=$PATH:$(go env GOPATH)/bin
 
     - name: Run Horusec analysis
       run: horusec start -p . -e true
