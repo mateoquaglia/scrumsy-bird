@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - featHorusec
   pull_request:
     branches:
       - main
