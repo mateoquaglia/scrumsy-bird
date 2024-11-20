@@ -6,6 +6,8 @@ on:
       - main
       - featHorusec
   pull_request:
+    branches:
+      - main
 
 jobs:
   horusec-analysis:
@@ -20,10 +22,11 @@ jobs:
       # 2. Instalar Horusec
       - name: Install Horusec
         run: |
-          curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/scripts/install.sh | bash
+          curl -fsSL https://horusec.io/bin/install.sh | bash
           echo "Horusec CLI installed successfully"
+          export PATH=$PATH:/usr/local/bin
 
       # 3. Ejecutar análisis con Horusec
       - name: Run Horusec
         run: |
-          horusec start -p . --log-level=info --enable-owasp-dependency-check
+          /usr/local/bin/horusec start -p . --log-level=info --enable-owasp-dependency-check
