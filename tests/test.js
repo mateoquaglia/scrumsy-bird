@@ -19,7 +19,7 @@ export let options = {
 export default function () {
     // Grupo para probar la carga de recursos
     group('Load Resources', function () {
-        let res = http.get('https://yourgameurl.com/assets/bird.png');
+        let res = http.get('https://jsonplaceholder.typicode.com/photos/1');
         check(res, {
             'status is 200': (r) => r.status === 200,
             'response time is below 200ms': (r) => r.timings.duration < 200,
@@ -29,7 +29,7 @@ export default function () {
 
     // Grupo para simular una acción de inicio de juego
     group('Start Game', function () {
-        let res = http.get('https://yourgameurl.com/start');
+        let res = http.get('https://jsonplaceholder.typicode.com/posts/1');
         check(res, {
             'status is 200': (r) => r.status === 200,
             'response time is below 200ms': (r) => r.timings.duration < 200,
@@ -39,9 +39,13 @@ export default function () {
 
     // Grupo para simular la interacción del jugador (movimiento del pájaro)
     group('Player Interaction', function () {
-        let res = http.post('https://yourgameurl.com/move', { action: 'flap' });
+        let res = http.post('https://jsonplaceholder.typicode.com/posts', {
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+        });
         check(res, {
-            'status is 200': (r) => r.status === 200,
+            'status is 201': (r) => r.status === 201,
             'response time is below 300ms': (r) => r.timings.duration < 300,
         }) || errorRate.add(1);
         sleep(1);
